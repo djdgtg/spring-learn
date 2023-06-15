@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.DbLibrarynexusMapper" >
+  <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.DbLibrarynexus" >
+    <id column="nexusid" property="nexusid" jdbcType="INTEGER" />
+    <result column="mdbname" property="mdbname" jdbcType="VARCHAR" />
+    <result column="mdbfield" property="mdbfield" jdbcType="VARCHAR" />
+    <result column="sdbname" property="sdbname" jdbcType="VARCHAR" />
+    <result column="sdbnamefield" property="sdbnamefield" jdbcType="VARCHAR" />
+    <result column="sdbvaluefield" property="sdbvaluefield" jdbcType="VARCHAR" />
+    <result column="sdbsql" property="sdbsql" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    nexusid, mdbname, mdbfield, sdbname, sdbnamefield, sdbvaluefield, sdbsql
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qinchao.cms.entity.DbLibrarynexusExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_librarynexus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from db_librarynexus
+    where nexusid = #{nexusid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_librarynexus
+    where nexusid = #{nexusid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qinchao.cms.entity.DbLibrarynexusExample" >
+    delete from db_librarynexus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" >
+    insert into db_librarynexus (nexusid, mdbname, mdbfield,
+      sdbname, sdbnamefield, sdbvaluefield,
+      sdbsql)
+    values (#{nexusid,jdbcType=INTEGER}, #{mdbname,jdbcType=VARCHAR}, #{mdbfield,jdbcType=VARCHAR},
+      #{sdbname,jdbcType=VARCHAR}, #{sdbnamefield,jdbcType=VARCHAR}, #{sdbvaluefield,jdbcType=VARCHAR},
+      #{sdbsql,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" >
+    insert into db_librarynexus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nexusid != null" >
+        nexusid,
+      </if>
+      <if test="mdbname != null" >
+        mdbname,
+      </if>
+      <if test="mdbfield != null" >
+        mdbfield,
+      </if>
+      <if test="sdbname != null" >
+        sdbname,
+      </if>
+      <if test="sdbnamefield != null" >
+        sdbnamefield,
+      </if>
+      <if test="sdbvaluefield != null" >
+        sdbvaluefield,
+      </if>
+      <if test="sdbsql != null" >
+        sdbsql,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nexusid != null" >
+        #{nexusid,jdbcType=INTEGER},
+      </if>
+      <if test="mdbname != null" >
+        #{mdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="mdbfield != null" >
+        #{mdbfield,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbname != null" >
+        #{sdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbnamefield != null" >
+        #{sdbnamefield,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbvaluefield != null" >
+        #{sdbvaluefield,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbsql != null" >
+        #{sdbsql,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qinchao.cms.entity.DbLibrarynexusExample" resultType="java.lang.Integer" >
+    select count(*) from db_librarynexus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_librarynexus
+    <set >
+      <if test="record.nexusid != null" >
+        nexusid = #{record.nexusid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mdbname != null" >
+        mdbname = #{record.mdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mdbfield != null" >
+        mdbfield = #{record.mdbfield,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdbname != null" >
+        sdbname = #{record.sdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdbnamefield != null" >
+        sdbnamefield = #{record.sdbnamefield,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdbvaluefield != null" >
+        sdbvaluefield = #{record.sdbvaluefield,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdbsql != null" >
+        sdbsql = #{record.sdbsql,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_librarynexus
+    set nexusid = #{record.nexusid,jdbcType=INTEGER},
+      mdbname = #{record.mdbname,jdbcType=VARCHAR},
+      mdbfield = #{record.mdbfield,jdbcType=VARCHAR},
+      sdbname = #{record.sdbname,jdbcType=VARCHAR},
+      sdbnamefield = #{record.sdbnamefield,jdbcType=VARCHAR},
+      sdbvaluefield = #{record.sdbvaluefield,jdbcType=VARCHAR},
+      sdbsql = #{record.sdbsql,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" >
+    update db_librarynexus
+    <set >
+      <if test="mdbname != null" >
+        mdbname = #{mdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="mdbfield != null" >
+        mdbfield = #{mdbfield,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbname != null" >
+        sdbname = #{sdbname,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbnamefield != null" >
+        sdbnamefield = #{sdbnamefield,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbvaluefield != null" >
+        sdbvaluefield = #{sdbvaluefield,jdbcType=VARCHAR},
+      </if>
+      <if test="sdbsql != null" >
+        sdbsql = #{sdbsql,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where nexusid = #{nexusid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" >
+    update db_librarynexus
+    set mdbname = #{mdbname,jdbcType=VARCHAR},
+      mdbfield = #{mdbfield,jdbcType=VARCHAR},
+      sdbname = #{sdbname,jdbcType=VARCHAR},
+      sdbnamefield = #{sdbnamefield,jdbcType=VARCHAR},
+      sdbvaluefield = #{sdbvaluefield,jdbcType=VARCHAR},
+      sdbsql = #{sdbsql,jdbcType=VARCHAR}
+    where nexusid = #{nexusid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.qinchao.cms.entity.DbLibrarynexusExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_librarynexus
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <!-- ### 以上代码由MBG + CommentPlugin自动生成, 生成时间: 2019-01-18 14:45:07 ### -->
+
+
+
+  <!-- Your codes goes here!!! -->
+
+</mapper>

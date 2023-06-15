@@ -1,0 +1,13 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: learn-authorization
+  cloud:
+    consul:
+      host: 114.116.240.82
+      port: 8500
+      discovery:
+        heartbeat:
+          enabled: true #开启心跳检测

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.MgRoleCustomMapper" >
+
+
+  <resultMap type="com.qinchao.cms.entity.custom.MgRoleCustomBean" id="mgRoleCustom">
+    <result column="RoleID" property="roleid" jdbcType="INTEGER" />
+    <result column="RoleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="UserID" property="userid" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="getManagerRoleList" resultMap="mgRoleCustom" parameterType="java.lang.Integer" >
+  select a.userid,a.roleid,b.rolename from base_mgrole a,base_roles b where a.roleid=b.roleid
+  </select>
+
+  <insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List">
+	<selectKey resultType="long" keyProperty="id" order="AFTER">
+		SELECT
+		LAST_INSERT_ID()
+	</selectKey>
+		insert into base_mgrole (UserID,RoleID)
+		values
+	<foreach collection="list" item="item" index="index" separator="," >
+	(#{item.userid},#{item.roleid})
+	</foreach>
+  </insert>
+
+  <delete id="deleteBatchByRoleId" parameterType="java.lang.String" >
+    delete from base_mgrole
+    where roleid in
+    <foreach item="roleids" collection="list" open="(" separator="," close=")">
+	#{roleids}
+	</foreach>
+  </delete>
+
+  <delete id="deleteBatchByMgId" parameterType="java.lang.String" >
+    delete from base_mgrole
+    where userid in
+    <foreach item="mgids" collection="list" open="(" separator="," close=")">
+	#{mgids}
+	</foreach>
+  </delete>
+</mapper>

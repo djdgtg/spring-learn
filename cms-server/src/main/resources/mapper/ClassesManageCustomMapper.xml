@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.ClassesManageCustomMapper" >
+  <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.custom.ClassesCustomBean" >
+    <id column="ClassID" property="classid" jdbcType="INTEGER" />
+    <result column="ParentClassID" property="parentclassid" jdbcType="INTEGER" />
+    <result column="ParentClassName" property="parentclassname" jdbcType="VARCHAR" />
+    <result column="ClassName" property="classname" jdbcType="VARCHAR" />
+    <result column="ClassImg" property="classimg" jdbcType="VARCHAR" />
+    <result column="ClassDescription" property="classdescription" jdbcType="VARCHAR" />
+    <result column="Sort" property="sort" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <sql id="Base_Column_List" >
+    a.ClassID, a.ParentClassID, a.ClassName,b.ClassName as ParentClassName,a.ClassDescription,a.ClassImg,a.sort
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qinchao.cms.entity.BaseClassesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from base_classes a left join base_classes b on a.ParentClassID = b.ClassID
+  </select>
+
+  <select id="countByExample" parameterType="com.qinchao.cms.entity.BaseClassesExample" resultType="java.lang.Integer" >
+    select count(*) from base_classes
+  </select>
+
+
+  <!-- 检查唯一性 -->
+  <select id="checkUniqueness" resultType="java.lang.Integer" parameterType="com.qinchao.cms.entity.BaseClasses" >
+    select count(ClassID) from base_classes
+    <where>
+        <if test="classid != null and classid != ''">
+           and ClassID != #{classid}
+        </if>
+        <if test="classname != null and classname != ''">
+           and ClassName = #{classname}
+        </if>
+        <if test="parentclassid != null and parentclassid != ''">
+           and ParentClassID = #{parentclassid}
+        </if>
+    </where>
+  </select>
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from base_classes
+    where ClassID in
+    <foreach item="classMsg" collection="list" open="(" separator="," close=")">
+	#{classMsg}
+	</foreach>
+  </delete>
+
+</mapper>

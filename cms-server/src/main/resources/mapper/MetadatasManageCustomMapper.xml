@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.MetadatasManageCustomMapper">
+	<resultMap id="BaseResultMap" type="com.qinchao.cms.entity.custom.MetadatasCustomBean">
+		<id column="MetaDataID" property="metadataid" jdbcType="INTEGER" />
+		<result column="ColumnName" property="columnname" jdbcType="VARCHAR" />
+		<result column="ColumnCName" property="columncname" jdbcType="VARCHAR" />
+		<result column="ColumnType" property="columntype" jdbcType="INTEGER" />
+		<result column="ColumnSource" property="columnsource" jdbcType="INTEGER" />
+		<result column="ColumnTypeRule" property="columntyperule" jdbcType="VARCHAR" />
+		<result column="DataType" property="datatype" jdbcType="VARCHAR" />
+		<result column="ColumnLength" property="columnlength" jdbcType="INTEGER" />
+		<result column="FormShow" property="formshow" jdbcType="INTEGER" />
+		<result column="GridShow" property="gridshow" jdbcType="INTEGER" />
+		<result column="Sorts" property="sorts" jdbcType="INTEGER" />
+		<result column="MouldID" property="mouldid" jdbcType="INTEGER" />
+		<result column="DefaultValue" property="defaultvalue" jdbcType="VARCHAR" />
+		<result column="SearchShow" property="searchshow" jdbcType="INTEGER" />
+		<result column="ValidExp" property="validexp" jdbcType="VARCHAR" />
+		<result column="ValidMsg" property="validmsg" jdbcType="VARCHAR" />
+		<result column="ColumnTypeName" property="columntypename" jdbcType="VARCHAR" />
+		<result column="ColumnSourceName" property="columnsourcename" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="DbMetadatasMap" type="com.qinchao.cms.entity.DbMetadatas">
+		<id column="MetaDataID" property="metadataid" jdbcType="INTEGER" />
+		<result column="ColumnName" property="columnname" jdbcType="VARCHAR" />
+		<result column="ColumnCName" property="columncname" jdbcType="VARCHAR" />
+		<result column="ColumnType" property="columntype" jdbcType="INTEGER" />
+		<result column="ColumnSource" property="columnsource" jdbcType="INTEGER" />
+		<result column="ColumnTypeRule" property="columntyperule" jdbcType="VARCHAR" />
+		<result column="DataType" property="datatype" jdbcType="VARCHAR" />
+		<result column="ColumnLength" property="columnlength" jdbcType="INTEGER" />
+		<result column="FormShow" property="formshow" jdbcType="INTEGER" />
+		<result column="GridShow" property="gridshow" jdbcType="INTEGER" />
+		<result column="Sorts" property="sorts" jdbcType="INTEGER" />
+		<result column="MouldID" property="mouldid" jdbcType="INTEGER" />
+		<result column="DefaultValue" property="defaultvalue" jdbcType="VARCHAR" />
+		<result column="SearchShow" property="searchshow" jdbcType="INTEGER" />
+		<result column="ValidExp" property="validexp" jdbcType="VARCHAR" />
+		<result column="ValidMsg" property="validmsg" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectByExample" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select distinct a.*,b.DicName as
+		ColumnTypeName,CONCAT('来源于',c.DicName,IFNULL(a.ColumnTypeRule,'')) as
+		ColumnSourceName
+		from db_metadatas a left join base_dics b on a.ColumnType = b.DicValue
+		left join base_dics c on a.ColumnSource = c.DicValue
+		where b.DicType = 'columntype' and c.DicType = 'columnsource' and
+		(a.ColumnType = 3 or a.ColumnType = 4) and a.MouldID = #{mouldid}
+		union
+		select distinct a.*,b.DicName as ColumnTypeName,
+		'' as ColumnSourceName
+		from db_metadatas a left join base_dics b on a.ColumnType = b.DicValue
+		where b.DicType = 'columntype' and a.ColumnType != 3 and a.ColumnType
+		!= 4 and a.MouldID = #{mouldid}
+		order by Sorts
+	</select>
+
+	<sql id="Base_Column_List">
+		MetaDataID, ColumnName, ColumnCName, ColumnType, ColumnSource, ColumnTypeRule,
+		DataType,
+		ColumnLength, FormShow, GridShow, Sorts, a.MouldID, DefaultValue, SearchShow,
+		ValidExp,ValidMsg
+	</sql>
+	<select id="selectByDbname" resultMap="DbMetadatasMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from db_metadatas a,db_datalibrarys b where a.MouldID=b.MouldID
+		<if test="databaseName != null and databaseName != ''">
+			and b.DataBaseName = #{databaseName}
+		</if>
+	</select>
+	<!-- 检查唯一性 -->
+	<select id="checkUniqueness" resultType="java.lang.Integer"
+		parameterType="com.qinchao.cms.entity.DbMetadatas">
+		select count(MetaDataID) from db_metadatas
+		<where>
+			<if test="metadataid != null and metadataid != ''">
+				and MetaDataID != #{metadataid}
+			</if>
+			<if test="columnname != null and columnname != ''">
+				and ColumnName = #{columnname}
+			</if>
+			<if test="mouldid != null and mouldid != ''">
+				and mouldid = #{mouldid}
+			</if>
+		</where>
+	</select>
+
+	<delete id="deleteBatch" parameterType="java.lang.String">
+		delete from db_metadatas
+		where MetaDataID in
+		<foreach item="metadataMsg" collection="list" open="("
+			separator="," close=")">
+			#{metadataMsg}
+		</foreach>
+	</delete>
+</mapper>

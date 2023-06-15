@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.SysLogsManageCustomMapper" >
+  <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.custom.SysLogsCustomBean">
+    <id column="LogID" property="logid" jdbcType="INTEGER" />
+    <result column="LogType" property="logtype" jdbcType="INTEGER" />
+    <result column="LogDetail" property="logdetail" jdbcType="VARCHAR" />
+    <result column="UserName" property="creatorName" jdbcType="VARCHAR" />
+    <result column="LogTypeName" property="logTypeName" jdbcType="VARCHAR" />
+    <result column="Creator" property="creator" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    l.LogID as LogID, l.LogType as LogType, l.LogDetail as LogDetail, l.Creator as Creator,
+     l.CreateTime as CreateTime, u.RealName as UserName,d.dicname as logTypeName
+  </sql>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hashmap">
+    select
+    <include refid="Base_Column_List" />
+    from base_logs l
+    left join base_managers u on l.Creator = u.UserID
+    left join base_dics d on l.LogType = d.dicvalue
+    where d.dictype = 'logtype' and d.isdictype = 0
+	    <if test="logType != null and logType != ''">
+	    	and l.LogType = #{logType}
+	    </if>
+        <if test="startTime != null and startTime != ''">
+           and l.CreateTime > #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+           and l.CreateTime &lt; #{endTime}
+        </if>
+        <if test="userName != null and userName != ''">
+           and u.RealName like CONCAT('%',#{userName},'%')
+        </if>
+    order by l.CreateTime desc
+    limit #{start},#{length}
+  </select>
+  <select id="countByExample" parameterType="hashmap" resultType="java.lang.Integer" >
+    select count(l.LogID)
+    from base_logs l
+    left join base_managers u on l.Creator = u.UserID
+    left join base_dics d on l.LogType = d.dicvalue
+    where d.dictype = 'logtype' and d.isdictype = 0
+	    <if test="logType != null and logType != ''" >
+	    	and l.LogType = #{logType}
+	    </if>
+        <if test="startTime != null and startTime != ''">
+           and l.CreateTime > #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+           and l.CreateTime &lt; #{endTime}
+        </if>
+        <if test="userName != null and userName != ''">
+           and u.RealName like CONCAT('%',#{userName},'%')
+        </if>
+  </select>
+</mapper>

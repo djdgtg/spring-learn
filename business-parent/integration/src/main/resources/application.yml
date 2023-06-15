@@ -1,0 +1,42 @@
+server:
+  port: 8081
+
+spring:
+  freemarker:
+    suffix: .html
+  profiles:
+    active: test
+  application:
+    name: learn-integration
+  datasource:
+    hikari:
+      connection-timeout: 10000
+      validation-timeout: 3000
+      idle-timeout: 30000
+      login-timeout: 5
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      read-only: false
+  cloud:
+    consul:
+      discovery:
+        heartbeat:
+          enabled: true #开启心跳检测
+      config:
+        enabled: true
+        format: YAML
+        data-key: data
+        prefixes: config
+        profile-separator: ":"
+
+# springdoc-openapi项目配置
+springdoc:
+  group-configs:
+    - group: 'integration'
+      packages-to-scan: com.qinchao.boot.integration.controller
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

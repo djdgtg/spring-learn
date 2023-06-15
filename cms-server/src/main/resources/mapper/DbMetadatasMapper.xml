@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.DbMetadatasMapper" >
+  <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.DbMetadatas" >
+
+    <!-- 字段ID -->
+    <id column="MetaDataID" property="metadataid" jdbcType="INTEGER" />
+
+    <!-- 字段英文名 -->
+    <result column="ColumnName" property="columnname" jdbcType="VARCHAR" />
+
+    <!-- 字段中文名 -->
+    <result column="ColumnCName" property="columncname" jdbcType="VARCHAR" />
+
+    <!-- 字段类型 -->
+    <result column="ColumnType" property="columntype" jdbcType="INTEGER" />
+
+    <!-- 字段来源 -->
+    <result column="ColumnSource" property="columnsource" jdbcType="INTEGER" />
+
+    <!-- 类型规则 -->
+    <result column="ColumnTypeRule" property="columntyperule" jdbcType="VARCHAR" />
+
+    <!-- 数据类型 -->
+    <result column="DataType" property="datatype" jdbcType="VARCHAR" />
+
+    <!-- 字段长度 -->
+    <result column="ColumnLength" property="columnlength" jdbcType="INTEGER" />
+
+    <!-- 表单显示 -->
+    <result column="FormShow" property="formshow" jdbcType="INTEGER" />
+
+    <!-- 列表显示 -->
+    <result column="GridShow" property="gridshow" jdbcType="INTEGER" />
+
+    <!-- 排序 -->
+    <result column="Sorts" property="sorts" jdbcType="INTEGER" />
+
+    <!-- 模型ID -->
+    <result column="MouldID" property="mouldid" jdbcType="INTEGER" />
+
+    <!-- 默认值 -->
+    <result column="DefaultValue" property="defaultvalue" jdbcType="VARCHAR" />
+
+    <!-- 搜索显示 -->
+    <result column="SearchShow" property="searchshow" jdbcType="INTEGER" />
+
+    <!-- 导入导出显示 -->
+    <result column="ImportAndExportShow" property="importandexportshow" jdbcType="INTEGER" />
+
+    <!-- 是否为必填项 -->
+    <result column="Required" property="required" jdbcType="INTEGER" />
+
+    <!-- 是否可修改列值 -->
+    <result column="Editable" property="editable" jdbcType="INTEGER" />
+    <result column="Only" property="only" jdbcType="INTEGER" />
+
+    <!-- 校验的正则表达式 -->
+    <result column="ValidExp" property="validexp" jdbcType="VARCHAR" />
+
+    <!-- 校验错误的提示信息 -->
+    <result column="ValidMsg" property="validmsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MetaDataID, ColumnName, ColumnCName, ColumnType, ColumnSource, ColumnTypeRule, DataType,
+    ColumnLength, FormShow, GridShow, Sorts, MouldID, DefaultValue, SearchShow, ImportAndExportShow,
+    Required, Editable, Only, ValidExp, ValidMsg
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qinchao.cms.entity.DbMetadatasExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_metadatas
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from db_metadatas
+    where MetaDataID = #{metadataid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_metadatas
+    where MetaDataID = #{metadataid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qinchao.cms.entity.DbMetadatasExample" >
+    delete from db_metadatas
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" >
+    insert into db_metadatas (MetaDataID, ColumnName, ColumnCName,
+      ColumnType, ColumnSource, ColumnTypeRule,
+      DataType, ColumnLength, FormShow,
+      GridShow, Sorts, MouldID,
+      DefaultValue, SearchShow, ImportAndExportShow,
+      Required, Editable, Only,
+      ValidExp, ValidMsg)
+    values (#{metadataid,jdbcType=INTEGER}, #{columnname,jdbcType=VARCHAR}, #{columncname,jdbcType=VARCHAR},
+      #{columntype,jdbcType=INTEGER}, #{columnsource,jdbcType=INTEGER}, #{columntyperule,jdbcType=VARCHAR},
+      #{datatype,jdbcType=VARCHAR}, #{columnlength,jdbcType=INTEGER}, #{formshow,jdbcType=INTEGER},
+      #{gridshow,jdbcType=INTEGER}, #{sorts,jdbcType=INTEGER}, #{mouldid,jdbcType=INTEGER},
+      #{defaultvalue,jdbcType=VARCHAR}, #{searchshow,jdbcType=INTEGER}, #{importandexportshow,jdbcType=INTEGER},
+      #{required,jdbcType=INTEGER}, #{editable,jdbcType=INTEGER}, #{only,jdbcType=INTEGER},
+      #{validexp,jdbcType=VARCHAR}, #{validmsg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" >
+    insert into db_metadatas
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="metadataid != null" >
+        MetaDataID,
+      </if>
+      <if test="columnname != null" >
+        ColumnName,
+      </if>
+      <if test="columncname != null" >
+        ColumnCName,
+      </if>
+      <if test="columntype != null" >
+        ColumnType,
+      </if>
+      <if test="columnsource != null" >
+        ColumnSource,
+      </if>
+      <if test="columntyperule != null" >
+        ColumnTypeRule,
+      </if>
+      <if test="datatype != null" >
+        DataType,
+      </if>
+      <if test="columnlength != null" >
+        ColumnLength,
+      </if>
+      <if test="formshow != null" >
+        FormShow,
+      </if>
+      <if test="gridshow != null" >
+        GridShow,
+      </if>
+      <if test="sorts != null" >
+        Sorts,
+      </if>
+      <if test="mouldid != null" >
+        MouldID,
+      </if>
+      <if test="defaultvalue != null" >
+        DefaultValue,
+      </if>
+      <if test="searchshow != null" >
+        SearchShow,
+      </if>
+      <if test="importandexportshow != null" >
+        ImportAndExportShow,
+      </if>
+      <if test="required != null" >
+        Required,
+      </if>
+      <if test="editable != null" >
+        Editable,
+      </if>
+      <if test="only != null" >
+        Only,
+      </if>
+      <if test="validexp != null" >
+        ValidExp,
+      </if>
+      <if test="validmsg != null" >
+        ValidMsg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="metadataid != null" >
+        #{metadataid,jdbcType=INTEGER},
+      </if>
+      <if test="columnname != null" >
+        #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="columncname != null" >
+        #{columncname,jdbcType=VARCHAR},
+      </if>
+      <if test="columntype != null" >
+        #{columntype,jdbcType=INTEGER},
+      </if>
+      <if test="columnsource != null" >
+        #{columnsource,jdbcType=INTEGER},
+      </if>
+      <if test="columntyperule != null" >
+        #{columntyperule,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null" >
+        #{datatype,jdbcType=VARCHAR},
+      </if>
+      <if test="columnlength != null" >
+        #{columnlength,jdbcType=INTEGER},
+      </if>
+      <if test="formshow != null" >
+        #{formshow,jdbcType=INTEGER},
+      </if>
+      <if test="gridshow != null" >
+        #{gridshow,jdbcType=INTEGER},
+      </if>
+      <if test="sorts != null" >
+        #{sorts,jdbcType=INTEGER},
+      </if>
+      <if test="mouldid != null" >
+        #{mouldid,jdbcType=INTEGER},
+      </if>
+      <if test="defaultvalue != null" >
+        #{defaultvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="searchshow != null" >
+        #{searchshow,jdbcType=INTEGER},
+      </if>
+      <if test="importandexportshow != null" >
+        #{importandexportshow,jdbcType=INTEGER},
+      </if>
+      <if test="required != null" >
+        #{required,jdbcType=INTEGER},
+      </if>
+      <if test="editable != null" >
+        #{editable,jdbcType=INTEGER},
+      </if>
+      <if test="only != null" >
+        #{only,jdbcType=INTEGER},
+      </if>
+      <if test="validexp != null" >
+        #{validexp,jdbcType=VARCHAR},
+      </if>
+      <if test="validmsg != null" >
+        #{validmsg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qinchao.cms.entity.DbMetadatasExample" resultType="java.lang.Integer" >
+    select count(*) from db_metadatas
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_metadatas
+    <set >
+      <if test="record.metadataid != null" >
+        MetaDataID = #{record.metadataid,jdbcType=INTEGER},
+      </if>
+      <if test="record.columnname != null" >
+        ColumnName = #{record.columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.columncname != null" >
+        ColumnCName = #{record.columncname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.columntype != null" >
+        ColumnType = #{record.columntype,jdbcType=INTEGER},
+      </if>
+      <if test="record.columnsource != null" >
+        ColumnSource = #{record.columnsource,jdbcType=INTEGER},
+      </if>
+      <if test="record.columntyperule != null" >
+        ColumnTypeRule = #{record.columntyperule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datatype != null" >
+        DataType = #{record.datatype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.columnlength != null" >
+        ColumnLength = #{record.columnlength,jdbcType=INTEGER},
+      </if>
+      <if test="record.formshow != null" >
+        FormShow = #{record.formshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.gridshow != null" >
+        GridShow = #{record.gridshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.sorts != null" >
+        Sorts = #{record.sorts,jdbcType=INTEGER},
+      </if>
+      <if test="record.mouldid != null" >
+        MouldID = #{record.mouldid,jdbcType=INTEGER},
+      </if>
+      <if test="record.defaultvalue != null" >
+        DefaultValue = #{record.defaultvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.searchshow != null" >
+        SearchShow = #{record.searchshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.importandexportshow != null" >
+        ImportAndExportShow = #{record.importandexportshow,jdbcType=INTEGER},
+      </if>
+      <if test="record.required != null" >
+        Required = #{record.required,jdbcType=INTEGER},
+      </if>
+      <if test="record.editable != null" >
+        Editable = #{record.editable,jdbcType=INTEGER},
+      </if>
+      <if test="record.only != null" >
+        Only = #{record.only,jdbcType=INTEGER},
+      </if>
+      <if test="record.validexp != null" >
+        ValidExp = #{record.validexp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validmsg != null" >
+        ValidMsg = #{record.validmsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_metadatas
+    set MetaDataID = #{record.metadataid,jdbcType=INTEGER},
+      ColumnName = #{record.columnname,jdbcType=VARCHAR},
+      ColumnCName = #{record.columncname,jdbcType=VARCHAR},
+      ColumnType = #{record.columntype,jdbcType=INTEGER},
+      ColumnSource = #{record.columnsource,jdbcType=INTEGER},
+      ColumnTypeRule = #{record.columntyperule,jdbcType=VARCHAR},
+      DataType = #{record.datatype,jdbcType=VARCHAR},
+      ColumnLength = #{record.columnlength,jdbcType=INTEGER},
+      FormShow = #{record.formshow,jdbcType=INTEGER},
+      GridShow = #{record.gridshow,jdbcType=INTEGER},
+      Sorts = #{record.sorts,jdbcType=INTEGER},
+      MouldID = #{record.mouldid,jdbcType=INTEGER},
+      DefaultValue = #{record.defaultvalue,jdbcType=VARCHAR},
+      SearchShow = #{record.searchshow,jdbcType=INTEGER},
+      ImportAndExportShow = #{record.importandexportshow,jdbcType=INTEGER},
+      Required = #{record.required,jdbcType=INTEGER},
+      Editable = #{record.editable,jdbcType=INTEGER},
+      Only = #{record.only,jdbcType=INTEGER},
+      ValidExp = #{record.validexp,jdbcType=VARCHAR},
+      ValidMsg = #{record.validmsg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" >
+    update db_metadatas
+    <set >
+      <if test="columnname != null" >
+        ColumnName = #{columnname,jdbcType=VARCHAR},
+      </if>
+      <if test="columncname != null" >
+        ColumnCName = #{columncname,jdbcType=VARCHAR},
+      </if>
+      <if test="columntype != null" >
+        ColumnType = #{columntype,jdbcType=INTEGER},
+      </if>
+      <if test="columnsource != null" >
+        ColumnSource = #{columnsource,jdbcType=INTEGER},
+      </if>
+      <if test="columntyperule != null" >
+        ColumnTypeRule = #{columntyperule,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null" >
+        DataType = #{datatype,jdbcType=VARCHAR},
+      </if>
+      <if test="columnlength != null" >
+        ColumnLength = #{columnlength,jdbcType=INTEGER},
+      </if>
+      <if test="formshow != null" >
+        FormShow = #{formshow,jdbcType=INTEGER},
+      </if>
+      <if test="gridshow != null" >
+        GridShow = #{gridshow,jdbcType=INTEGER},
+      </if>
+      <if test="sorts != null" >
+        Sorts = #{sorts,jdbcType=INTEGER},
+      </if>
+      <if test="mouldid != null" >
+        MouldID = #{mouldid,jdbcType=INTEGER},
+      </if>
+      <if test="defaultvalue != null" >
+        DefaultValue = #{defaultvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="searchshow != null" >
+        SearchShow = #{searchshow,jdbcType=INTEGER},
+      </if>
+      <if test="importandexportshow != null" >
+        ImportAndExportShow = #{importandexportshow,jdbcType=INTEGER},
+      </if>
+      <if test="required != null" >
+        Required = #{required,jdbcType=INTEGER},
+      </if>
+      <if test="editable != null" >
+        Editable = #{editable,jdbcType=INTEGER},
+      </if>
+      <if test="only != null" >
+        Only = #{only,jdbcType=INTEGER},
+      </if>
+      <if test="validexp != null" >
+        ValidExp = #{validexp,jdbcType=VARCHAR},
+      </if>
+      <if test="validmsg != null" >
+        ValidMsg = #{validmsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MetaDataID = #{metadataid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" >
+    update db_metadatas
+    set ColumnName = #{columnname,jdbcType=VARCHAR},
+      ColumnCName = #{columncname,jdbcType=VARCHAR},
+      ColumnType = #{columntype,jdbcType=INTEGER},
+      ColumnSource = #{columnsource,jdbcType=INTEGER},
+      ColumnTypeRule = #{columntyperule,jdbcType=VARCHAR},
+      DataType = #{datatype,jdbcType=VARCHAR},
+      ColumnLength = #{columnlength,jdbcType=INTEGER},
+      FormShow = #{formshow,jdbcType=INTEGER},
+      GridShow = #{gridshow,jdbcType=INTEGER},
+      Sorts = #{sorts,jdbcType=INTEGER},
+      MouldID = #{mouldid,jdbcType=INTEGER},
+      DefaultValue = #{defaultvalue,jdbcType=VARCHAR},
+      SearchShow = #{searchshow,jdbcType=INTEGER},
+      ImportAndExportShow = #{importandexportshow,jdbcType=INTEGER},
+      Required = #{required,jdbcType=INTEGER},
+      Editable = #{editable,jdbcType=INTEGER},
+      Only = #{only,jdbcType=INTEGER},
+      ValidExp = #{validexp,jdbcType=VARCHAR},
+      ValidMsg = #{validmsg,jdbcType=VARCHAR}
+    where MetaDataID = #{metadataid,jdbcType=INTEGER}
+  </update>
+  <select resultMap="BaseResultMap" parameterType="com.qinchao.cms.entity.DbMetadatasExample" id="selectByExampleWithRowbounds" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_metadatas
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <!-- ### 以上代码由MBG + CommentPlugin自动生成, 生成时间: 2019-01-18 14:45:07 ### -->
+
+
+
+  <!-- Your codes goes here!!! -->
+
+</mapper>

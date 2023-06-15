@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="minio" />
+        <module name="knife4j-boot" />
+        <module name="cms-server" />
+        <module name="logback" />
+        <module name="system-server" />
+        <module name="caffeine" />
+        <module name="authorization-server" />
+        <module name="easyexcel" />
+        <module name="web" />
+        <module name="resource-server" />
+        <module name="integration" />
+        <module name="gateway-server" />
+        <module name="knife4j" />
+        <module name="mybatis-plus" />
+        <module name="resource-gateway-server" />
+        <module name="logback-amqp" />
+        <module name="base" />
+        <module name="log4j" />
+        <module name="logback-logstash" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="integration-amqp" target="1.8" />
+      <module name="knife4j" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.LibraryNexusManageCustomMapper" >
+
+  <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.DbLibrarynexus" >
+    <id column="nexusid" property="nexusid" jdbcType="INTEGER" />
+    <result column="mdbname" property="mdbname" jdbcType="VARCHAR" />
+    <result column="mdbfield" property="mdbfield" jdbcType="VARCHAR" />
+    <result column="sdbname" property="sdbname" jdbcType="VARCHAR" />
+    <result column="sdbnamefield" property="sdbnamefield" jdbcType="VARCHAR" />
+    <result column="sdbvaluefield" property="sdbvaluefield" jdbcType="VARCHAR" />
+    <result column="sdbsql" property="sdbsql" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByDbId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select a.* from db_librarynexus a,db_datalibrarys b where a.mdbname = b.DataBaseName and b.DataBaseID = #{databaseId}
+  </select>
+
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from db_librarynexus
+    where mdbname in
+    <foreach item="dbMsg" collection="list" open="(" separator="," close=")">
+	#{dbMsg}
+	</foreach>
+  </delete>
+</mapper>

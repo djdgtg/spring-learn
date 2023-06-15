@@ -1,0 +1,39 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: learn-gateway
+  cloud:
+    consul:
+      host: 114.116.240.82
+      port: 8500
+      discovery:
+        heartbeat:
+          enabled: true #开启心跳检测
+    gateway:
+      routes: #配置路由路径
+        - id: integration
+          uri: lb://learn-integration
+          predicates:
+            - Path=/integration/**
+          filters:
+            - StripPrefix=1
+        - id: system
+          uri: lb://learn-system
+          predicates:
+            - Path=/system/**
+          filters:
+            - StripPrefix=1
+        - id: authorization
+          uri: lb://learn-authorization
+          predicates:
+            - Path=/authorization/**
+          filters:
+            - StripPrefix=1
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9000
+          jwk-set-uri: http://127.0.0.1:9000/oauth2/jwks # Add jwkSetUri configuration, resource server will not ping authorization server on startup

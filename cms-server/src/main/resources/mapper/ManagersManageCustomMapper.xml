@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.ManagersManageCustomMapper">
+	<resultMap id="BaseResultMap"
+		type="com.qinchao.cms.entity.custom.ManagersCustomBean">
+		<id column="UserID" property="userid" jdbcType="INTEGER" />
+		<result column="UserName" property="username" jdbcType="VARCHAR" />
+		<result column="RealName" property="realname" jdbcType="VARCHAR" />
+		<result column="Phone" property="phone" jdbcType="VARCHAR" />
+		<result column="Email" property="email" jdbcType="VARCHAR" />
+		<result column="LastLoginTime" property="lastlogintime"
+			jdbcType="TIMESTAMP" />
+		<result column="Creator" property="creator" jdbcType="INTEGER" />
+		<result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="Modifier" property="modifier" jdbcType="INTEGER" />
+		<result column="ModifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+		<result column="Passwd" property="passwd" jdbcType="CHAR" />
+		<result column="Status" property="status" jdbcType="INTEGER" />
+		<result column="roleName" property="rolename" jdbcType="VARCHAR" />
+		<result column="RoleID" property="roleid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		UserID, UserName, RealName, Phone, Email, LastLoginTime, Creator, CreateTime,
+		Modifier,
+		ModifyTime, Passwd, Status
+	</sql>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<select id="listManagersCustomBean" resultMap="BaseResultMap"
+		parameterType="com.qinchao.cms.entity.custom.ManagersManageSearchBean">
+		select
+		bm.UserID,
+		bm.UserName,
+		bm.RealName,
+		bm.Phone,
+		bm.Email,
+		bm.LastLoginTime,
+		bm.Creator,
+		bm.CreateTime,
+		bm.Modifier,
+		bm.ModifyTime,
+		bm.Passwd,
+		bm.STATUS,
+		br.RoleID,
+		br.roleName
+		FROM
+		base_managers bm
+		LEFT JOIN base_mgrole bmr ON bm.userid = bmr.userid
+		LEFT JOIN base_roles br ON br.RoleID = bmr.RoleID
+		<where>
+			<if test="userName != null and userName != ''">
+				and bm.userName like '%${userName}%'
+			</if>
+			<if test="realName != null and realName != ''">
+				and bm.realName like '%${realName}%'
+			</if>
+			<if test="phone != null and phone != ''">
+				and bm.phone like '%${phone}%'
+			</if>
+			<if test="roleid != null and roleid != ''">
+				and br.RoleID = #{roleid}
+			</if>
+			and bm.UserId!=1 and bm.Status!=2
+		</where>
+		order by createtime desc
+	</select>
+
+	<select id="countByExample" parameterType="com.qinchao.cms.entity.BaseManagersExample"
+		resultType="java.lang.Integer">
+		select count(UserID) from base_managers
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<!-- 检查唯一性 -->
+	<select id="checkUniqueness" resultType="java.lang.Integer"
+		parameterType="com.qinchao.cms.entity.BaseManagers">
+		select count(UserID) from base_managers
+		<where>
+			<if test="userid != null and userid != ''">
+				and UserID != #{userid}
+			</if>
+			<if test="username != null and username != ''">
+				and UserName = #{username}
+			</if>
+			<if test="status != null and status != ''">
+				and Status = #{status}
+			</if>
+		</where>
+	</select>
+
+	<sql id="MysqlDialectSuffix">
+		<if test="page != null">
+			limit #{page.begin} , #{page.length}
+		</if>
+	</sql>
+
+	<sql id="MysqlOrder">
+		<if test="orderList != null and orderList.size() > 0">
+			order by
+			<foreach collection="orderList" item="sortCondition"
+				separator=",">
+				${sortCondition.column} ${sortCondition.dir}
+			</foreach>
+		</if>
+	</sql>
+
+	<insert id="insertSelective" parameterType="com.qinchao.cms.entity.BaseManagers"
+		useGeneratedKeys="true" keyProperty="userid">
+		insert into base_managers
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				UserID,
+			</if>
+			<if test="username != null">
+				UserName,
+			</if>
+			<if test="realname != null">
+				RealName,
+			</if>
+			<if test="phone != null">
+				Phone,
+			</if>
+			<if test="email != null">
+				Email,
+			</if>
+			<if test="lastlogintime != null">
+				LastLoginTime,
+			</if>
+			<if test="creator != null">
+				Creator,
+			</if>
+			<if test="createtime != null">
+				CreateTime,
+			</if>
+			<if test="modifier != null">
+				Modifier,
+			</if>
+			<if test="modifytime != null">
+				ModifyTime,
+			</if>
+			<if test="passwd != null">
+				Passwd,
+			</if>
+			<if test="status != null">
+				Status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="realname != null">
+				#{realname,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="lastlogintime != null">
+				#{lastlogintime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="modifytime != null">
+				#{modifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="passwd != null">
+				#{passwd,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteBatch" parameterType="java.lang.String">
+		delete from base_managers
+		where UserID in
+		<foreach item="managerMsg" collection="list" open="("
+			separator="," close=")">
+			#{managerMsg}
+		</foreach>
+	</delete>
+
+	<update id="updateBatch" parameterType="java.util.Map">
+		update base_managers
+		<set>
+			<if test="passwd != null">
+				Passwd = #{passwd,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				Status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="modifier != null">
+				Modifier = #{modifier,jdbcType=INTEGER},
+			</if>
+			<if test="modifytime != null">
+				ModifyTime = #{modifytime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where UserID in
+		<foreach item="managerMsg" collection="list" open="("
+			separator="," close=")">
+			#{managerMsg}
+		</foreach>
+	</update>
+</mapper>

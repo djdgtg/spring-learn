@@ -1,0 +1,19 @@
+# Project exclude paths
+/authorization-server/target/
+/business-parent/integration/target/
+/business-parent/system-server/target/
+/cms-server/target/
+/common/base/target/
+/common/cache/caffeine/target/
+/common/easyexcel/target/
+/common/knife4j-boot/target/
+/common/logging/log4j/target/
+/common/logging/logback/target/
+/common/logging/logback-amqp/target/
+/common/logging/logback-logstash/target/
+/common/minio/target/
+/common/mybatis-plus/target/
+/common/resource-server/target/
+/common/web/target/
+/gateway-server/target/
+/resource-gateway-server/target/

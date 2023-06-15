@@ -1,0 +1,5 @@
+com.qinchao.common.web.aspect.LogAspect
+com.qinchao.common.web.exception.GlobalExceptionHandler
+com.qinchao.common.web.config.JacksonConfig
+com.qinchao.common.web.config.ThreadPoolExecutorConfig
+com.qinchao.common.web.config.WebConfig

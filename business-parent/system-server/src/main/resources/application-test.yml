@@ -1,0 +1,25 @@
+spring:
+  config:
+    import: optional:consul:${spring.cloud.consul.host}:${spring.cloud.consul.port}
+  datasource:
+    url: jdbc:mysql://114.116.240.82:3306/spring_learn?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: learn
+    password: learn@123456
+  cloud:
+    consul:
+      host: 114.116.240.82
+      port: 8500
+  rabbitmq:
+    host: 114.116.240.82
+    port: 5672
+    username: rabbitmq
+    password: rabbitmq@123456
+
+minio:
+  endpoint: http://114.116.240.82:9000
+  access-key: minio
+  secret-key: minio@123456
+
+logstash:
+  url: 114.116.240.82:5044

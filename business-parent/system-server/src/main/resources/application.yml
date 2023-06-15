@@ -1,0 +1,55 @@
+server:
+  port: 8082
+
+spring:
+  profiles:
+    active: test
+  application:
+    name: learn-system
+  datasource:
+    hikari:
+      connection-timeout: 10000
+      validation-timeout: 3000
+      idle-timeout: 30000
+      login-timeout: 5
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      read-only: false
+  cloud:
+    consul:
+      discovery:
+        heartbeat:
+          enabled: true #开启心跳检测
+      config:
+        enabled: true
+        format: yaml
+        data-key: data
+        prefixes: config
+        profile-separator: "-"
+  mail:
+    host: smtp.163.com
+    #发送者邮箱
+    username: djdgtg@163.com
+    #配置密码,注意不是真正的密码，而是刚刚申请到的授权码
+    password: OXNSWOIPQNDJEVOE
+    #服务协议
+    protocol: smtp
+    # 编码集
+    default-encoding: UTF-8
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+mybatis-plus:
+  multi-tenancy-enabled: true
+
+
+sms:
+  sendUrl: http://sms.shbstl.com/api/Message_Api.html
+  key: 13BA8447898A3B4984D336C56C0EA126EFF774785AF8A6C16E80EB4180F5EEE2

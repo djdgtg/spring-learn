@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.DicsManageCustomMapper" >
+
+  <!-- 检查唯一性 -->
+  <select id="checkUniqueness" resultType="java.lang.Integer" parameterType="com.qinchao.cms.entity.BaseDics" >
+    select count(DicID) from base_dics
+    <where>
+        <if test="dicid != null and dicid != ''">
+           and DicID != #{dicid}
+        </if>
+        <if test="dictype != null and dictype != ''">
+           and DicType = #{dictype}
+        </if>
+        <if test="dicname != null and dicname != ''">
+           and DicName = #{dicname}
+        </if>
+        <if test="dictypename != null and dictypename != ''">
+           and DicTypeName = #{dictypename}
+        </if>
+    </where>
+  </select>
+
+  <!-- 检查唯一性 根据名称和类型-->
+  <select id="checkUniquenessByTypeOrName" resultType="java.lang.Integer" parameterType="com.qinchao.cms.entity.BaseDics" >
+    select count(DicID) from base_dics
+    <where>
+        <if test="dictype != null and dictype != ''">
+           and DicType = #{dictype}
+        </if>
+        <if test="dicname != null and dicname != ''">
+           and DicName = #{dicname}
+        </if>
+        <if test="dictypename != null and dictypename != ''">
+           and DicTypeName = #{dictypename}
+        </if>
+    </where>
+  </select>
+
+
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from base_dics
+    where DicID in
+    <foreach item="dicMsg" collection="list" open="(" separator="," close=")">
+	#{dicMsg}
+	</foreach>
+  </delete>
+</mapper>

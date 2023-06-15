@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.MenusManageCustomMapper" >
+  <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.custom.MenusCustomBean" >
+    <id column="MenuID" property="menuid" jdbcType="INTEGER" />
+    <result column="MenuName" property="menuname" jdbcType="VARCHAR" />
+    <result column="ParentMenuID" property="parentmenuid" jdbcType="INTEGER" />
+    <result column="Path" property="path" jdbcType="VARCHAR" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+    <result column="Sort" property="sort" jdbcType="INTEGER" />
+    <result column="IsOutLink" property="isoutlink" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    a.MenuID, a.MenuName, a.ParentMenuID,a.Path, a.Description, a.Sort, a.IsOutLink,b.MenuName as ParentMenuName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qinchao.cms.entity.BaseMenusExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from base_menus a left join base_menus b on a.ParentMenuID = b.MenuID
+      order by a.Sort
+  </select>
+
+  <select id="countByExample" parameterType="com.qinchao.cms.entity.BaseMenusExample" resultType="java.lang.Integer" >
+    select count(*) from base_menus
+  </select>
+
+  <!-- 检查唯一性 -->
+  <select id="checkUniqueness" resultType="java.lang.Integer" parameterType="com.qinchao.cms.entity.BaseMenus" >
+    select count(MenuID) from base_menus
+    <where>
+        <if test="menuid != null and menuid != ''">
+           and MenuID != #{menuid}
+        </if>
+        <if test="menuname != null and menuname != ''">
+           and MenuName = #{menuname}
+        </if>
+        <if test="parentmenuid != null and parentmenuid != ''">
+           and ParentMenuID = #{parentmenuid}
+        </if>
+    </where>
+  </select>
+
+
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from base_menus
+    where MenuID in
+    <foreach item="menuMsg" collection="list" open="(" separator="," close=")">
+	#{menuMsg}
+	</foreach>
+  </delete>
+
+  <delete id="delRoleMenuBatch" parameterType="java.lang.String" >
+    delete from base_rolemenu
+    where MenuID in
+    <foreach item="menuMsg" collection="list" open="(" separator="," close=")">
+	#{menuMsg}
+	</foreach>
+  </delete>
+
+  <select id="getRolesMenus" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  select m.* from base_menus m
+	where m.MenuID in(
+	select r.MenuID from  base_rolemenu r
+	where r.RoleID in (select mr.RoleID from base_mgrole mr where mr.userid = #{userid,jdbcType=INTEGER}))
+	order by m.Sort
+  </select>
+
+  <select id="getMenusStringListByUserId" resultType="String">
+	SELECT
+	substring_index(CONCAT(#{contextPath}, bm.Path), '?',1)
+	FROM
+		base_rolemenu brm
+	LEFT JOIN base_roles br ON br.RoleID = brm.RoleID
+	LEFT JOIN base_menus bm ON bm.MenuID = brm.MenuID
+	LEFT JOIN base_mgrole bmr ON brm.RoleID = bmr.RoleID
+	LEFT JOIN base_managers bmg ON bmg.UserID = bmr.UserID
+	WHERE
+		bmg.UserID = #{id}
+  </select>
+
+  <select id="getMenusStringList" resultType="String" parameterType="String">
+	SELECT
+	substring_index(CONCAT(#{contextPath}, bm.Path), '?',1)
+	FROM
+	base_menus bm
+  </select>
+
+</mapper>

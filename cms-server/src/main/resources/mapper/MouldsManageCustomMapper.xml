@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.MouldsManageCustomMapper">
+
+    <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.DbMoulds">
+        <id column="MouldID" property="mouldid" jdbcType="INTEGER"/>
+        <result column="MouldName" property="mouldname" jdbcType="VARCHAR"/>
+        <result column="Description" property="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 检查唯一性 -->
+    <select id="checkUniqueness" resultType="java.lang.Integer" parameterType="com.qinchao.cms.entity.DbMoulds">
+        select count(MouldID) from db_moulds
+        <where>
+            <if test="mouldid != null and mouldid != ''">
+                and MouldID != #{mouldid}
+            </if>
+            <if test="mouldname != null and mouldname != ''">
+                and MouldName = #{mouldname}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteBatch" parameterType="java.lang.String">
+        delete from db_moulds
+        where MouldID in
+        <foreach item="mouldMsg" collection="list" open="(" separator="," close=")">
+            #{mouldMsg}
+        </foreach>
+    </delete>
+
+</mapper>

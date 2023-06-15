@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qinchao.cms.mapper.custom.RolesManageCustomMapper" >
+
+  <resultMap id="BaseResultMap" type="com.qinchao.cms.entity.BaseRoles" >
+    <id column="RoleID" property="roleid" jdbcType="INTEGER" />
+    <result column="RoleName" property="rolename" jdbcType="VARCHAR" />
+    <result column="Description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    RoleID,RoleName,Description
+  </sql>
+
+  <!-- 检查唯一性 -->
+  <select id="checkUniqueness" resultType="java.lang.Integer" parameterType="com.qinchao.cms.entity.BaseRoles" >
+    select count(RoleID) from base_roles
+    <where>
+        <if test="roleid != null and roleid != ''">
+           RoleID != #{roleid}
+        </if>
+        <if test="rolename != null and rolename != ''">
+           and RoleName = #{rolename}
+        </if>
+    </where>
+  </select>
+  <select id="getRoleMenus" resultType="com.qinchao.cms.entity.BaseMenus" parameterType="java.lang.Integer" >
+   	SELECT
+		m.*
+	FROM
+		base_rolemenu rm
+	LEFT JOIN base_roles r ON rm.RoleID = r.RoleID
+	LEFT JOIN base_menus m ON rm.MenuID = m.MenuID
+	WHERE rm.RoleID=#{roleId}
+  </select>
+
+  <delete id="deleteBatch" parameterType="java.lang.String" >
+    delete from base_roles
+    where RoleID in
+    <foreach item="roleMsg" collection="list" open="(" separator="," close=")">
+	#{roleMsg}
+	</foreach>
+  </delete>
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/authorization-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/authorization-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/cms-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/cms-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/integration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/integration/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/system-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/business-parent/system-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cms-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cms-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/base/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/cache/caffeine/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/cache/caffeine/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/cache/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/cache/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/easyexcel/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/easyexcel/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/knife4j-boot/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/knife4j-boot/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/knife4j/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/knife4j/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/log4j/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/log4j/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/logback-amqp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/logback-amqp/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/logback-logstash/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/logback-logstash/src/main/java/com.qinchao.common.logging.logback.logstash" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/logback-logstash/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/logback/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/logback/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/logging/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/minio/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/minio/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/mybatis-plus/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/mybatis-plus/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/resource-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/resource-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/web/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/integration-amqp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/integration-amqp/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/integration-amqp/src/main/resources/nginx.conf" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/resource-gateway-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/resource-gateway-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
